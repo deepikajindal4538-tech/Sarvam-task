@@ -23,72 +23,63 @@ export const Header: React.FC<HeaderProps> = ({
   const currentLangObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
 
   return (
-    <header className="glass-header sticky top-0 z-50 px-4 py-3 sm:px-8">
-      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+    <header className="glass-header sticky top-0 z-50 px-4 py-2.5">
+      <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
         {/* Brand */}
-        <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-emerald-600 shadow-md shadow-orange-500/20 text-white font-bold text-xl">
-            <span className="select-none tracking-tighter">BS</span>
-            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center">
-              <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
-            </span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black text-sm flex items-center justify-center shadow-xs">
+            BS
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
-                <span>{t.appName}</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">
-                  {currentLangObj.nativeName}
-                </span>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-base font-extrabold text-slate-900 tracking-tight">
+                {t.appName}
               </h1>
+              <span className="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-slate-100 text-slate-600">
+                {currentLangObj.nativeName}
+              </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium hidden sm:block">
+            <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
               {t.tagline}
             </p>
           </div>
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Digital India Badge */}
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>{t.badgeGov}</span>
-          </div>
-
+        <div className="flex items-center gap-2">
           {/* Sound Toggle */}
           <button
             onClick={onToggleAudioMute}
             title={isAudioMuted ? 'Unmute Voice Responses' : 'Mute Voice Responses'}
-            className="p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 hover:border-slate-300 bg-white text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5 text-xs font-medium shadow-sm"
+            className="px-2.5 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 bg-white text-slate-700 transition-colors flex items-center gap-1 text-xs font-semibold shadow-xs"
           >
             {isAudioMuted ? (
               <>
-                <VolumeX className="w-4 h-4 text-rose-500" />
-                <span className="hidden md:inline">Muted</span>
+                <VolumeX className="w-3.5 h-3.5 text-rose-500" />
+                <span className="hidden sm:inline text-slate-500">Muted</span>
               </>
             ) : (
               <>
-                <Volume2 className="w-4 h-4 text-emerald-600" />
-                <span className="hidden md:inline">Voice ON</span>
+                <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="hidden sm:inline">Voice ON</span>
               </>
             )}
           </button>
 
           {/* Language Selector */}
           <div className="relative flex items-center">
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 shadow-sm text-slate-800 hover:border-orange-300 focus-within:ring-2 focus-within:ring-orange-500">
-              <Globe className="w-4 h-4 text-orange-500 shrink-0" />
+            <div className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-800 hover:border-orange-300">
+              <Globe className="w-3.5 h-3.5 text-orange-500 shrink-0" />
               <select
                 value={currentLang}
                 onChange={(e) => onLanguageChange(e.target.value as LanguageCode)}
-                className="bg-transparent text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none cursor-pointer pr-1"
+                className="bg-transparent text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer pr-1"
                 aria-label={t.selectLanguage}
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (
                   <option key={lang.code} value={lang.code}>
-                    {lang.flag} {lang.nativeName} ({lang.name})
+                    {lang.flag} {lang.nativeName}
                   </option>
                 ))}
               </select>
@@ -98,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Help button */}
           <button
             onClick={onOpenHelp}
-            className="p-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 transition-colors shadow-sm"
+            className="p-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 transition-colors shadow-xs"
             title="About BoloSaathi"
           >
             <HelpCircle className="w-4 h-4" />

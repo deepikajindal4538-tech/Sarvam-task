@@ -70,13 +70,13 @@ export const Checklist: React.FC<ChecklistProps> = ({
   const isAllMandatoryDone = totalMandatory > 0 && checkedMandatory === totalMandatory;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-4 sm:p-5 shadow-sm my-4">
+    <div className="space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-            <h3 className="font-extrabold text-slate-900 text-base sm:text-lg">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <h3 className="font-bold text-slate-900 text-sm sm:text-base">
               {t.checklistTitle}
             </h3>
           </div>
@@ -87,13 +87,13 @@ export const Checklist: React.FC<ChecklistProps> = ({
 
         {/* Progress Badge */}
         <div className="flex items-center gap-2 self-start sm:self-center">
-          <span className="text-xs font-bold text-slate-700 bg-white border border-slate-200 px-2.5 py-1 rounded-full shadow-xs">
+          <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full">
             {checkedMandatory} / {totalMandatory} {t.documentsReady}
           </span>
           {checkedMandatory > 0 && (
             <button
               onClick={handleReset}
-              className="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-200/60 transition-colors"
+              className="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 transition-colors"
               title={t.resetAll}
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -103,9 +103,9 @@ export const Checklist: React.FC<ChecklistProps> = ({
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-slate-200 h-2 rounded-full my-3 overflow-hidden">
+      <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
         <div
-          className="bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 h-full transition-all duration-500 rounded-full"
+          className="bg-gradient-to-r from-orange-500 to-emerald-500 h-full transition-all duration-300 rounded-full"
           style={{ width: `${progressPercent}%` }}
         />
       </div>

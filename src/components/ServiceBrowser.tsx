@@ -45,18 +45,9 @@ export const ServiceBrowser: React.FC<ServiceBrowserProps> = ({
       : MOCK_SERVICES.filter((s) => s.category === selectedCategory);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 my-8">
+    <div className="w-full my-3">
       {/* Category Pills */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
-          <span>{t.popularServices}</span>
-        </h3>
-        <span className="text-xs text-slate-500 font-medium">
-          {filteredServices.length} Schemes
-        </span>
-      </div>
-
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
         {categories.map((cat) => {
           const Icon = cat.icon;
           const isSelected = selectedCategory === cat.id;
@@ -64,10 +55,10 @@ export const ServiceBrowser: React.FC<ServiceBrowserProps> = ({
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 shadow-xs ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 ${
                 isSelected
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                  ? 'bg-slate-900 text-white shadow-xs'
+                  : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -78,7 +69,7 @@ export const ServiceBrowser: React.FC<ServiceBrowserProps> = ({
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
         {filteredServices.map((service) => {
           const title = service.title[currentLang] || service.title['en'];
           const desc = service.shortDescription[currentLang] || service.shortDescription['en'];
@@ -90,30 +81,28 @@ export const ServiceBrowser: React.FC<ServiceBrowserProps> = ({
             <div
               key={service.id}
               onClick={() => onSelectService(sampleQuery)}
-              className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-orange-300 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
+              className="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-orange-300 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-orange-100 text-orange-800 uppercase tracking-wider">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 uppercase tracking-wider">
                     {service.category.replace('_', ' ')}
                   </span>
-                  <div className="w-7 h-7 rounded-full bg-slate-100 group-hover:bg-orange-500 group-hover:text-white flex items-center justify-center transition-colors text-slate-400">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-orange-600 transition-colors" />
                 </div>
 
-                <h4 className="text-sm font-bold text-slate-900 mt-2.5 group-hover:text-orange-600 transition-colors line-clamp-1">
+                <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-2 group-hover:text-orange-600 transition-colors">
                   {title}
                 </h4>
 
-                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed line-clamp-2">
+                <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                   {desc}
                 </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
-                <span>Govt portal link verified</span>
-                <span className="font-semibold text-orange-600">Ask now →</span>
+              <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                <span>Verified .gov.in</span>
+                <span className="font-semibold text-orange-600">Select →</span>
               </div>
             </div>
           );
