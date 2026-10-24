@@ -13,7 +13,7 @@ import { TRANSLATIONS } from './data/translations';
 import { Shield, Sparkles, PhoneCall } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [currentLang, setCurrentLang] = useState<LanguageCode>('hi');
+  const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [activeResult, setActiveResult] = useState<QueryResult | null>(null);
   const [lastQuery, setLastQuery] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -24,9 +24,9 @@ export const App: React.FC = () => {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
   const currentLangObj = SUPPORTED_LANGUAGES.find((l) => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
 
-  // Set initial default answer card on first load (e.g. Aadhaar update) so citizen sees immediate value!
+  // Set initial default answer card on first load in English
   useEffect(() => {
-    handleSearch('आधार कार्ड में पता कैसे बदलें', false, true);
+    handleSearch('How to update address in Aadhaar card online', false, true);
   }, []);
 
   const handleSearch = async (queryText: string, isVoice: boolean = false, silentInit: boolean = false) => {

@@ -2,6 +2,15 @@ import { Language, PublicService } from './types.js';
 
 export const SUPPORTED_LANGUAGES: Language[] = [
   {
+    code: 'en',
+    name: 'English',
+    nativeName: 'English',
+    speechCode: 'en-IN',
+    flag: '🇮🇳',
+    greeting: 'Namaste! I am BoloSaathi. How can I assist you with public services today?',
+    exampleQuery: 'How to update address in Aadhaar card?',
+  },
+  {
     code: 'hi',
     name: 'Hindi',
     nativeName: 'हिंदी',
@@ -9,15 +18,6 @@ export const SUPPORTED_LANGUAGES: Language[] = [
     flag: '🇮🇳',
     greeting: 'नमस्ते! मैं बोलो साथी हूँ। आज मैं आपकी क्या सहायता कर सकता हूँ?',
     exampleQuery: 'आधार कार्ड में पता कैसे बदलें?',
-  },
-  {
-    code: 'en',
-    name: 'English',
-    nativeName: 'English',
-    speechCode: 'en-IN',
-    flag: '🇮🇳',
-    greeting: 'Namaste! I am BoloSaathi. How can I assist you with public services today?',
-    exampleQuery: 'How to apply for Ayushman Bharat card?',
   },
   {
     code: 'ta',

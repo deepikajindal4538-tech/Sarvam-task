@@ -143,7 +143,9 @@ export const VoiceMic: React.FC<VoiceMicProps> = ({
           ) : (
             <div className="flex flex-col items-center gap-1">
               <Mic className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow" />
-              <span className="text-[10px] font-bold tracking-wider uppercase opacity-90">BOLIYE</span>
+              <span className="text-[10px] font-bold tracking-wider uppercase opacity-90">
+                {currentLang === 'hi' ? 'BOLIYE' : 'SPEAK'}
+              </span>
             </div>
           )}
         </button>
@@ -175,7 +177,11 @@ export const VoiceMic: React.FC<VoiceMicProps> = ({
             </p>
             <p className="text-xs text-slate-500 flex items-center gap-1 font-medium">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>{currentLangObj.nativeName} में बोलें या नीचे से चुनें</span>
+              <span>
+                {currentLang === 'hi'
+                  ? 'हिंदी में बोलें या नीचे से चुनें'
+                  : `Speak in ${currentLangObj.name} or pick a topic below`}
+              </span>
             </p>
           </div>
         )}
@@ -200,13 +206,25 @@ export const VoiceMic: React.FC<VoiceMicProps> = ({
           🎙️ "{currentLangObj.exampleQuery}"
         </button>
         <button
-          onClick={() => onTranscriptReady('आयुष्मान भारत 5 लाख कार्ड')}
+          onClick={() =>
+            onTranscriptReady(
+              currentLang === 'hi'
+                ? 'आयुष्मान भारत 5 लाख कार्ड'
+                : 'How to apply for Ayushman Bharat 5 lakh health card?'
+            )
+          }
           className="text-xs font-medium px-3 py-1 rounded-full bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-slate-700 transition-all shadow-sm"
         >
           🏥 Ayushman Card
         </button>
         <button
-          onClick={() => onTranscriptReady('पीएम किसान सम्मान निधि ई-केवाईसी')}
+          onClick={() =>
+            onTranscriptReady(
+              currentLang === 'hi'
+                ? 'पीएम किसान सम्मान निधि ई-केवाईसी'
+                : 'How to do PM-KISAN eKYC and check installment status?'
+            )
+          }
           className="text-xs font-medium px-3 py-1 rounded-full bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-slate-700 transition-all shadow-sm"
         >
           🌾 PM-KISAN ₹6,000
