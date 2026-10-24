@@ -2,7 +2,7 @@ import React from 'react';
 import { Globe, Volume2, VolumeX, ShieldCheck, HelpCircle } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../../shared/servicesData';
 import { LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface HeaderProps {
   currentLang: LanguageCode;

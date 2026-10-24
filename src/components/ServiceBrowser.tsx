@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { MOCK_SERVICES } from '../../shared/servicesData';
 import { LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface ServiceBrowserProps {
   currentLang: LanguageCode;

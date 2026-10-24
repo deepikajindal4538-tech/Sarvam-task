@@ -13,7 +13,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { QueryResult, LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 import { speechService } from '../../services/speechService';
 import { Checklist } from './Checklist';
 import { SourceLinks } from './SourceLinks';

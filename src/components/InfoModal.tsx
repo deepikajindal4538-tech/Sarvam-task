@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, ShieldCheck, Mic, Globe, CheckSquare, Sparkles } from 'lucide-react';
 import { LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface InfoModalProps {
   isOpen: boolean;

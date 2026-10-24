@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { Search, X, Mic, ArrowRight } from 'lucide-react';
 import { LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface TextInputBarProps {
   currentLang: LanguageCode;

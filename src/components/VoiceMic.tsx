@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Mic, MicOff, Sparkles, AlertCircle } from 'lucide-react';
 import { LanguageCode } from '../../shared/types';
 import { SUPPORTED_LANGUAGES } from '../../shared/servicesData';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 import { speechService } from '../../services/speechService';
 import { AudioWaveform } from './AudioWaveform';
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CheckSquare, Square, CheckCircle2, Info, Sparkles, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface ChecklistItemData {
   id: string;

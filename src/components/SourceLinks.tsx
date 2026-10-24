@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLink, Phone, ShieldCheck, Clock, IndianRupee } from 'lucide-react';
 import { OfficialLink, LanguageCode } from '../../shared/types';
-import { TRANSLATIONS } from '../../data/translations';
+import { TRANSLATIONS } from '../data/translations';
 
 interface SourceLinksProps {
   officialLinks: OfficialLink[];
