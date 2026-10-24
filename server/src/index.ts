@@ -3,8 +3,9 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { SUPPORTED_LANGUAGES, MOCK_SERVICES } from '../../shared/servicesData.js';
-import { resolveServiceQuery } from '../../shared/queryResolver.js';
 import { LanguageCode } from '../../shared/types.js';
+import { retrieveRelevantKnowledge } from './retrievalEngine.js';
+import { generateGroundedAnswer, getSarvamApiKey } from './sarvamClient.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,12 +13,18 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Log API status on initialization
+const apiKey = getSarvamApiKey();
+console.log(`[BoloSaathi Backend] Starting server...`);
+console.log(`[Sarvam API Integration] API Key Detected: ${Boolean(apiKey)}`);
+
 // API Health Check
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
     app: 'BoloSaathi API',
-    version: '1.0.0',
+    sarvamConfigured: Boolean(getSarvamApiKey()),
+    version: '1.2.0',
     timestamp: new Date().toISOString(),
   });
 });
@@ -41,21 +48,46 @@ app.get('/api/services/:id', (req: Request, res: Response) => {
   res.json(service);
 });
 
-// Query / Voice Query Resolution
-app.post('/api/query', (req: Request, res: Response) => {
+// Grounded Query Resolution with Sarvam API
+app.post('/api/query', async (req: Request, res: Response) => {
   const { query, language = 'en', isVoice = false } = req.body;
 
   if (!query || typeof query !== 'string') {
     return res.status(400).json({ error: 'Query string is required' });
   }
 
-  const result = resolveServiceQuery(query, language as LanguageCode);
+  const sanitizedQuery = query.trim().substring(0, 500); // Prevent overflow
+  const startTimestamp = Date.now();
 
-  res.json({
-    ...result,
-    isVoice,
-    resolvedAt: new Date().toISOString(),
-  });
+  try {
+    // 1. Chunk-level retrieval
+    const retrieval = retrieveRelevantKnowledge(sanitizedQuery);
+
+    // 2. Grounded generation via Sarvam AI
+    const result = await generateGroundedAnswer({
+      query: sanitizedQuery,
+      language: language as LanguageCode,
+      matchedChunks: retrieval.matchedChunks,
+      hasSufficientEvidence: retrieval.hasSufficientEvidence,
+      unverifiedReason: retrieval.unverifiedReason,
+      confidenceScore: retrieval.confidenceScore,
+    });
+
+    const elapsed = Date.now() - startTimestamp;
+    console.log(`[Pipeline Completed] "${sanitizedQuery}" in ${elapsed}ms | Verified: ${retrieval.hasSufficientEvidence}`);
+
+    res.json({
+      ...result,
+      isVoice,
+      resolvedAt: new Date().toISOString(),
+    });
+  } catch (error: any) {
+    console.error(`[Pipeline Error] Failed processing "${sanitizedQuery}": ${error.message || error}`);
+    res.status(500).json({
+      error: 'Failed to process citizen query.',
+      message: 'Service error occurred while retrieving official records.',
+    });
+  }
 });
 
 // Trending / Quick citizen queries
