@@ -1,4 +1,4 @@
-import { Language, PublicService } from './types';
+import { Language, PublicService } from './types.js';
 
 export const SUPPORTED_LANGUAGES: Language[] = [
   {
