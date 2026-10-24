@@ -1,5 +1,5 @@
-import { MOCK_SERVICES, SUPPORTED_LANGUAGES } from './servicesData';
-import { LanguageCode, PublicService, QueryResult } from './types';
+import { MOCK_SERVICES } from './servicesData.js';
+import { LanguageCode, PublicService, QueryResult, StepItem, ChecklistItem, Helpline } from './types.js';
 
 // Keyword dictionary for cross-language and colloquial matching
 const KEYWORD_MAP: Record<string, string[]> = {
@@ -67,8 +67,9 @@ export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): Q
     }
 
     // Check titles across all languages
-    for (const title of Object.values(service.title)) {
-      const words = title.toLowerCase().split(/\s+/);
+    for (const rawTitle of Object.values(service.title)) {
+      const titleStr = String(rawTitle);
+      const words = titleStr.toLowerCase().split(/\s+/);
       for (const w of words) {
         if (w.length > 2 && cleanQuery.includes(w)) {
           score += 2;
@@ -96,20 +97,20 @@ export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): Q
   const turnaroundTime = bestMatch.turnaroundTime[lang] || bestMatch.turnaroundTime['en'] || Object.values(bestMatch.turnaroundTime)[0];
   const eligibility = bestMatch.eligibility[lang] || bestMatch.eligibility['en'] || [];
 
-  const steps = bestMatch.steps.map(s => ({
+  const steps = bestMatch.steps.map((s: StepItem) => ({
     stepNumber: s.stepNumber,
     title: s.title[lang] || s.title['en'] || Object.values(s.title)[0],
     description: s.description[lang] || s.description['en'] || Object.values(s.description)[0],
   }));
 
-  const checklist = bestMatch.checklist.map(c => ({
+  const checklist = bestMatch.checklist.map((c: ChecklistItem) => ({
     id: c.id,
     name: c.name[lang] || c.name['en'] || Object.values(c.name)[0],
     mandatory: c.mandatory,
     tip: c.tip ? (c.tip[lang] || c.tip['en'] || Object.values(c.tip)[0]) : undefined,
   }));
 
-  const helplines = bestMatch.helplines.map(h => ({
+  const helplines = bestMatch.helplines.map((h: Helpline) => ({
     number: h.number,
     description: h.description[lang] || h.description['en'] || Object.values(h.description)[0],
     tollFree: h.tollFree,

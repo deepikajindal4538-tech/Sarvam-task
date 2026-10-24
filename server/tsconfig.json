@@ -7,7 +7,7 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "../",
+    "rootDir": "..",
     "noEmit": true  
   },
   "include": ["src/**/*", "../shared/**/*"]
