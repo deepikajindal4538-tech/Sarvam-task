@@ -60,7 +60,7 @@ app.post('/api/query', (req: Request, res: Response) => {
 
 // Trending / Quick citizen queries
 app.get('/api/trending', (req: Request, res: Response) => {
-  const lang = (req.query.lang as LanguageCode) || 'hi';
+  const lang = (req.query.lang as LanguageCode) || 'en';
   const trending = MOCK_SERVICES.slice(0, 5).map(s => ({
     id: s.id,
     category: s.category,
