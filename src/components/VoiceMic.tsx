@@ -3,7 +3,7 @@ import { Mic, MicOff, Sparkles, AlertCircle } from 'lucide-react';
 import { LanguageCode } from '../../shared/types';
 import { SUPPORTED_LANGUAGES } from '../../shared/servicesData';
 import { TRANSLATIONS } from '../data/translations';
-import { speechService } from '../../services/speechService';
+import { speechService } from '../services/speechService';
 import { AudioWaveform } from './AudioWaveform';
 
 interface VoiceMicProps {
