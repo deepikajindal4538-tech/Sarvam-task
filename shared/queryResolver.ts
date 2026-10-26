@@ -10,7 +10,7 @@ const KEYWORD_MAP: Record<string, string[]> = {
   ],
   'ayushman-bharat': [
     'ayushman', 'pmjay', 'health', 'hospital', 'medical', 'bima', 'insurance', 'card', 
-    'golden card', '5 lakh', 'treatment', 'cashless', 'आयुष्मान', 'इलाज', 'अस्पताल', 
+    'golden card', '5 lakh', 'treatment', 'cashless', 'senior 70', 'आयुष्मान', 'इलाज', 'अस्पताल', 
     'बीमा', 'गोल्डन कार्ड', 'ஆயுஷ்மான்', 'மருத்துவம்', 'ఆరోగ్య', 'স্বাস্থ্য'
   ],
   'pm-kisan': [
@@ -45,7 +45,7 @@ const KEYWORD_MAP: Record<string, string[]> = {
 export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): QueryResult {
   const cleanQuery = query.toLowerCase().trim();
 
-  let bestMatch: PublicService = MOCK_SERVICES[0];
+  let bestMatch: PublicService | null = null;
   let bestScore = 0;
 
   for (const service of MOCK_SERVICES) {
@@ -55,14 +55,14 @@ export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): Q
     // Check tags
     for (const tag of service.tags) {
       if (cleanQuery.includes(tag.toLowerCase())) {
-        score += 3;
+        score += 3.5;
       }
     }
 
     // Check keyword map
     for (const kw of keywords) {
       if (cleanQuery.includes(kw.toLowerCase())) {
-        score += 4;
+        score += 4.5;
       }
     }
 
@@ -72,7 +72,7 @@ export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): Q
       const words = titleStr.toLowerCase().split(/\s+/);
       for (const w of words) {
         if (w.length > 2 && cleanQuery.includes(w)) {
-          score += 2;
+          score += 2.0;
         }
       }
     }
@@ -83,9 +83,60 @@ export function resolveServiceQuery(query: string, lang: LanguageCode = 'en'): Q
     }
   }
 
-  // Fallback to Aadhaar or first service if no match
-  if (bestScore === 0) {
-    bestMatch = MOCK_SERVICES[0];
+  // If no match meets confidence threshold, NEVER default to Aadhaar! Return verified notice.
+  if (!bestMatch || bestScore < 3.0) {
+    return {
+      serviceId: 'unverified-query',
+      category: 'advisory',
+      title: 'Information Could Not Be Verified',
+      summary: `We could not verify official government information for "${query}" in our public services directory. BoloSaathi strictly avoids inventing fees, deadlines, or rules. Please consult the National Portal of India (india.gov.in) or call Helpline 1947.`,
+      spokenText: 'This information could not be verified in official public service records. Please check the National Portal of India at india.gov.in.',
+      department: 'National Citizen Advisory',
+      officialLinks: [
+        {
+          name: 'National Portal of India',
+          url: 'https://india.gov.in',
+          badge: 'Official Portal (gov.in)',
+          isOfficial: true,
+        },
+      ],
+      helplines: [
+        {
+          number: '1947',
+          description: 'National Citizen Helpline',
+          tollFree: true,
+        },
+      ],
+      eligibility: ['Information could not be verified in official records.'],
+      fee: 'Information not verified',
+      turnaroundTime: 'Not verified',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Consult Official National Portal',
+          description: 'Visit https://india.gov.in to search the central and state schemes directory.',
+        },
+        {
+          stepNumber: 2,
+          title: 'Contact Citizen Help Centre',
+          description: 'Dial toll-free 1947 or visit your nearest Common Service Centre (CSC).',
+        },
+      ],
+      checklist: [
+        {
+          id: 'unverified_check',
+          name: 'Official government gazette or department notification',
+          mandatory: true,
+          tip: 'Always verify source authenticity before applying',
+        },
+      ],
+      suggestedQuestions: [
+        'How to update address in Aadhaar card online?',
+        'How to apply for Ayushman Bharat 5 lakh health card?',
+        'How to check PM-KISAN installment status?',
+      ],
+      matchScore: 0,
+    };
   }
 
   // Localize content to requested language with English fallback

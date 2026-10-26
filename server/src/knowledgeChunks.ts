@@ -17,16 +17,15 @@ export interface KnowledgeChunk {
 }
 
 export const VERIFIED_KNOWLEDGE_CHUNKS: KnowledgeChunk[] = [
-  // AADHAAR UPDATE CHUNKS
+  // AADHAAR ADDRESS UPDATE
   {
     id: 'aadhaar-address-update-online',
     serviceId: 'aadhaar-update',
     category: 'identity',
     title: 'Aadhaar Card Online Address Update',
     questionKeywords: [
-      'aadhaar', 'aadhar', 'address', 'pata', 'update', 'change', 'online', 
-      'myaadhaar', 'uidai', 'address proof', 'electricity bill', 'rent agreement',
-      'आधार', 'पता', 'एड्रेस'
+      'aadhaar', 'aadhar', 'adhar', 'address', 'pata', 'myaadhaar', 'uidai', 
+      'address proof', 'electricity bill', 'rent agreement', 'आधार', 'पता', 'एड्रेस'
     ],
     content: 
       'Aadhaar residential address can be updated online through the official UIDAI myAadhaar portal (myaadhaar.uidai.gov.in). ' +
